@@ -1,0 +1,14 @@
+[Unit]
+Description=The fantastic Hello webapp
+After=network.target
+
+[Service]
+#EnvironmentFile=/root/demos/hello-webapp/env
+WorkingDirectory=/root/demos/hello-webapp
+ExecStart=/usr/bin/gunicorn -b ':8000' --workers=2 hello:app
+KillMode=process
+Restart=on-failure
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target

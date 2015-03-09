@@ -1,0 +1,6 @@
+[Unit]
+Description=Filemover service
+
+[Service]
+ExecStart=/root/demos/filemover/moveit.sh
+Type=oneshot
