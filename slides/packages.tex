@@ -1,0 +1,62 @@
+%% -*- latex -*-
+
+%% General stuff
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{listings}
+\usepackage{graphicx}
+
+%% Colored tables
+%% http://tex.stackexchange.com/questions/94799/how-do-i-color-table-columns-and-rows
+\usepackage{xcolor}
+\usepackage{tabularx,colortbl}
+\newcolumntype{C}{>{\setlength\hsize{1\hsize}\centering}X}%
+
+\definecolor{Gray}{gray}{0.85}
+\definecolor{LightCyan}{rgb}{0.88,1,1}
+\definecolor{LightBlue}{rgb}{0.7,0.7,1.0}
+\definecolor{Red}{rgb}{1,0,0}
+% BG color for listings etc.
+\definecolor{LightGray}{gray}{0.95}
+\definecolor{highlight}{rgb}{1.0,1.0,0.5}
+
+%\usepackage[normalem]{ulem}
+\usepackage{cancel}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{longtable}
+
+%% http://tex.stackexchange.com/questions/13423/how-to-change-the-color-of-href-links-for-real
+\definecolor{links}{HTML}{2A1B81}
+\hypersetup{colorlinks,linkcolor=,urlcolor=links}
+\urlstyle{same} % Don't print URLs in monospaced font.
+
+%% Some space between paragraphs.
+\setlength{\parskip}{1.5ex}
+%\smallskipamount
+%0.5\baselineskip
+
+%% BibLaTeX
+%\usepackage[backend=bibtex,style=alpha]{biblatex}
+%\addbibresource{ipv6.bib}
+
+%% Links and document metadata; load this package last.
+\usepackage{hyperref}
+
+%% Local commands
+\newcommand{\bstem}{\vline height 0pt depth 1.2ex width 0pt\relax}
+\newcommand{\rfc}[2]{\href{http://tools.ietf.org/html/rfc#1}{RFC~#1: #2}}
+\newcommand{\rfcx}[1]{\href{http://tools.ietf.org/html/rfc#1}{RFC~#1}}
+\newcommand{\lsthighl}[1]{\begingroup\setlength{\fboxsep}{0pt}\colorbox{highlight}{#1}\endgroup}
+%\newcommand{\lsthighl}[1]{\underline{#1}}
+\newcommand{\tblue}[1]{\textcolor{blue}{#1}}
+\newcommand{\tred}[1]{\textcolor{red}{#1}}
+\def\mc{\multicolumn}
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}

@@ -1,0 +1,10 @@
+## Generic files to ignore
+*~
+*.DS_Store
+._*
+
+## Emacs auto-save and locks
+\#*\#
+.\#*
+
+## Project ignores

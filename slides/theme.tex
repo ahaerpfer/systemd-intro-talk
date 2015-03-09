@@ -1,0 +1,21 @@
+\mode<presentation>
+{
+  \usetheme{Singapore}
+  \setbeamercovered{transparent}
+
+  %% Show page/slide number
+  %\setbeamertemplate{footline}[frame number]
+
+  \definecolor{myblue}{rgb}{0,0.1,0.5}
+  \setbeamertemplate{blocks}[rounded][shadow=false]
+  \addtobeamertemplate{block begin}{\pgfsetfillopacity{0.8}}{\pgfsetfillopacity{1}}
+  \setbeamercolor{structure}{fg=myblue}
+
+  %% Deactivate navigation
+  %\beamertemplatenavigationsymbolsempty
+  
+  %% Prevent footnotes from colliding with navigation
+  \setbeamertemplate{sidebar right}{} % get rid of navigation entries there
+  \addtobeamertemplate{footline}{\hfill\usebeamertemplate***{navigation symbols}\hspace*{0.1cm}\par\vskip 2pt}{}
+  \setbeamertemplate{frametitle continuation}[from second]
+}

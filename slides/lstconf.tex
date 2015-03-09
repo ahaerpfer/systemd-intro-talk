@@ -1,0 +1,37 @@
+%% Default style for the lstlisting environment.
+\lstset{ %
+  language=Clean,				% language
+%  basicstyle=\scriptsize\ttfamily,		% fontsize and style
+  basicstyle=\ttfamily,
+  %xleftmargin=0pt,				% listing indentation
+  xleftmargin=1em,				% listing indentation
+  %numbers=left,
+  numberstyle=\tiny,
+  %stepnumber=1,				% lineno stepping
+  %numbersep=10pt,                  		% sep of lineno-s
+%  backgroundcolor=\color{LightGray},  		% requires \usepackage{color}
+  showspaces=false,
+  showtabs=false,
+  %% Draw a box around the listing and change BG color.
+  %frame=single,				% draw frame
+%  frame=lrtb,
+  %frame=l,
+  %framesep=5pt,
+  %framerule=1pt,
+  tabsize=8,
+  captionpos=b,
+  breaklines=true,				% auto linebreaking
+  breakatwhitespace=true,			% break only at whitespace
+}
+
+\lstdefinestyle{numbered}{
+  xleftmargin=0.5em,
+  numbers=left,
+  numberstyle=\tiny,
+  %stepnumber=1,
+  numbersep=12pt,
+  frame=single,
+  frame=l,
+  framesep=5pt,
+  %framerule=1pt,
+}

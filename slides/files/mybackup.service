@@ -1,0 +1,11 @@
+[Unit]
+Description=mybackup
+
+[Service]
+BlockIOAccounting=1
+BlockIOWriteBandwidth=/dev/sda 2M
+ExecStart=/usr/bin/dd if=/dev/zero of=/backupfile bs=1024 count=1000000 oflag=direct
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

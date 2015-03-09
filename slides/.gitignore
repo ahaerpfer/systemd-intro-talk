@@ -1,0 +1,12 @@
+## LaTeX cruft
+*.aux
+*.bbl
+*.blg
+*.dvi
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+
