@@ -6,7 +6,7 @@
   {\scriptsize \href{mailto:andreas.haerpfer@consol.de}
    {\nolinkurl{(andreas.haerpfer@consol.de)}}}}
 \institute{Consol-Akademie}
-\date{v2pre, \today}
+\date{v2, 10.~März 2015}
 
 %% PDF properties
 \subject{systemd}
@@ -28,15 +28,15 @@
 \end{frame}
 
 %%----------------------------------------------------------------------
-\section[Überblick]{Überblick: Historie, Features, \dots}
+\section[Einführung]{Einführung: Historie, Features, \dots}
 
 \begin{frame}[fragile, allowframebreaks]{Linux-Init bisher}
 \begin{block}{Sys\,V-Init}
 \begin{itemize}
-\item Robuste, einfache Struktur, "`well known"'.
-\item Init-Skripte sind Shellskripte (aber viel doppelter Code).
+\item Robuste, einfache Struktur, ``well known''.
+\item Init-Skripte sind Shellskripte (oft viel doppelter Code).
 \item Sequentielle Ausführung (langsam).
-\item Reihenfolge nur über S- und K-Links in den Runleveln.
+\item Reihenfolge über \emph{S}- und \emph{K}-Links in den Runleveln.
 \item Keine echten Dependencies.
 \item Kein Monitoring/Auto-Restart von Diensten.
 \item Nicht Hotplug-aware.
@@ -52,7 +52,7 @@
 \end{block}
 
 \framebreak
-Interessante Divergenzen: Wie restartet man Apache?
+Diverse Eigentümlichkeiten, z.\,B.: Wie restartet man Apache?
 
 \begin{lstlisting}[style=numbered]
 # apachectl restart
@@ -98,7 +98,7 @@ Redhat Enterprise Linux \> Juni 2014 \\
 Oracle Linux \> Juli 2014 \\
 SUSE Linux Enterprise Server \> Oktober 2014 \\[1ex]
 Debian \> geplant für Debian 8 ``Jessie'' \\
-Ubuntu \> geplant \\[1ex]
+Ubuntu \> geplant für 15.04\\[1ex]
 Gentoo \> nicht als Default
 \end{tabbing}
 \vspace*{1ex}
@@ -115,7 +115,7 @@ nicht auf anderes OS portierbar.
 \item Verleibt sich nach und nach andere Tools ein $\rightarrow$
 Bloat.\\ (D-Bus, \emph{udev}, \emph{inetd}, \emph{cron}, \dots)
 \item Teilweise sehr kontrovers wahrgenommener Entwickler\\ (Lennart
-Poettering [jetzt bei Redhat]).
+Poettering [Redhat]).
 \item \dots
 \end{itemize}
 
@@ -165,11 +165,11 @@ choice'{}''.}\,\footnote{\url{https://news.ycombinator.com/item?id=7729075}}
 
 
 %%----------------------------------------------------------------------
-\section[Basics]{Basics: Dienste verwalten, Targets, \dots}
+\section[Basics]{Basics: Dienste verwalten, Targets, User-Kommandos, \dots}
 
-\begin{frame}{Komponenten/Nomenklatur}
+\begin{frame}[allowframebreaks]{Komponenten/Nomenklatur}
   \begin{columns}[onlytextwidth]
-    \begin{column}{0.5\textwidth}
+    \begin{column}[t]{0.5\textwidth}
       \begin{block}{systemd}
         \begin{itemize}
           \item systemd (PID=1)
@@ -179,23 +179,17 @@ choice'{}''.}\,\footnote{\url{https://news.ycombinator.com/item?id=7729075}}
  	\end{itemize}
       \end{block}
 
-      \begin{block}{Logging}
-        \begin{itemize}
-          \item systemd-journal
-          \item journalctl
-	  \item \emph{/etc/systemd/journald.conf}
-        \end{itemize}
-      \end{block}
-    \end{column}
-
-    \begin{column}{0.5\textwidth}
       \begin{block}{Unit-Files}
         \begin{itemize}
 	  \item Pkgs: \emph{/lib/systemd/system}
 	  \item Lokal: \emph{/etc/systemd/system}
+	  \item ``Drop-ins'':\\
+	  \mbox{\emph{/etc/systemd/system/foobar.service.d/*.conf}}
 	\end{itemize}
       \end{block}
+    \end{column}
 
+    \begin{column}[t]{0.5\textwidth}
       \begin{block}{Unit-Typen}
         \begin{itemize}
 	  \item target
@@ -205,6 +199,34 @@ choice'{}''.}\,\footnote{\url{https://news.ycombinator.com/item?id=7729075}}
 	  \item path
 	  \item timer
 	\end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \framebreak
+
+  \begin{columns}[onlytextwidth]
+    \begin{column}[t]{0.5\textwidth}
+      \begin{block}{Logging}
+        \begin{itemize}
+          \item systemd-journal
+          \item journalctl
+	  \item \emph{/etc/systemd/journald.conf}
+	\end{itemize}
+      \end{block}
+    \end{column}
+
+    \begin{column}[t]{0.5\textwidth}
+      \begin{block}{Weitere Tools}
+      \begin{itemize}
+        \item loginctl
+	\item hostnamectl
+	\item busctl
+	\item networkctl
+	\item timedatectl
+	\item localectl
+	\item \dots
+      \end{itemize}
       \end{block}
     \end{column}
   \end{columns}
@@ -267,10 +289,10 @@ choice'{}''.}\,\footnote{\url{https://news.ycombinator.com/item?id=7729075}}
 \end{frame}
 
 
-\begin{frame}[fragile,allowframebreaks]{Targets \xcancel{\normalfont Runlevel}}
+\begin{frame}[fragile,allowframebreaks]{Targets}
 \begin{block}{Was sind Targets?}
 \begin{itemize}
-\item Definierte Laufzeitkonfigurationen ($\approx$~Runlevel).
+\item Definierte Laufzeitkonfigurationen ($\approx$~Runlevel/Milestone).
 \item "`Ankerpunkte"' für Dependencies.
 \end{itemize}
 \begin{lstlisting}
@@ -347,7 +369,7 @@ choice'{}''.}\,\footnote{\url{https://news.ycombinator.com/item?id=7729075}}
 \framebreak
 
 \begin{block}{Maintenance Modes}
-\textbf{Single-user:} Incl. lokaler Filesysteme und einiger wichtiger
+\textbf{Single-user:} Inkl. lokaler Filesysteme und einiger wichtiger
 Services.  \emph{Kein Netzwerk!}
 \begin{lstlisting}
 # systemctl rescue
@@ -413,7 +435,7 @@ Rescue-Mode nicht mehr funktioniert:
 
 
 %%----------------------------------------------------------------------
-\section[Eigene Services]{Demo: Einen eigenen systemd-Service bauen}
+\section[Eigene Services]{Demo: Einen eigenen systemd-Service bauen.}
 
 \begin{frame}{Abkupfern beim \emph{sshd.service}}
 \footnotesize
@@ -423,7 +445,7 @@ Rescue-Mode nicht mehr funktioniert:
 \end{frame}
 
 
-\begin{frame}{Der erste eigene Service}
+\begin{frame}{Ein eigener Service}
 \emph{hello.service}
 \footnotesize
 \lstinputlisting[style=numbered]{files/hello.service}
@@ -450,16 +472,19 @@ Rescue-Mode nicht mehr funktioniert:
 
 
 %%----------------------------------------------------------------------
-\section[Logging]{Logging in the 21st Century}
+\section[Logging]{Logging in the 21st Century.}
 
 \begin{frame}[fragile,allowframebreaks]{\emph{systemd}\,-Logging}
-\begin{block}{Features des ``Journal''}
+\begin{block}{Features}
 \begin{itemize}
-\item Logging auch wenn noch kein \emph{rsyslog} läuft.
+\item Binäres ``Journal''.
 \item Strukturierte Logs inkl.~Metadaten, Indizierung, \dots
-\item Default Weiterleitung an \emph{rsyslog}, Journal nur im Memory.
-\item Separate Persistierung möglich. \\ $\rightarrow$ \texttt{\# mkdir
-/var/log/journal}
+\item Logging auch wenn noch kein \emph{rsyslog} läuft.
+\item Default: Weiterleitung an \emph{rsyslog}, Journal nur im Memory.
+\item Separate Persistierung möglich.
+\begin{lstlisting}
+# mkdir /var/log/journal
+\end{lstlisting}
 \item Queries über Systemgrenzen hinweg.
 \item \emph{/etc/systemd/journald.conf}
 \item journald.conf(5)
@@ -493,7 +518,25 @@ Rescue-Mode nicht mehr funktioniert:
 
 
 %%----------------------------------------------------------------------
-\section[Advanced]{Advanced Features – Ausblick}
+\section[Advanced]{Advanced Features: Ein kleiner Ausblick, was sonst
+noch geht.}
+
+\begin{frame}[fragile]
+\frametitle{User-\emph{systemd}\,\footnote{\emph{launchd} unter OS~X
+bietet etwas ähnliches.}}
+\begin{itemize}
+\item Pro-User Instanz des \emph{systemd} (läuft mit dessen UID).
+\item Normalerweise Start bei Login und Stop bei Logout des Users.
+\item ``Linger''-Mode möglich mittels
+\begin{lstlisting}
+# loginctl enable-linger username
+\end{lstlisting}
+\item D-Bus-Kopplung; braucht X11-Session (?).
+\end{itemize}
+\vspace*{1ex}
+\tred{\dots ich hab's ohne X11 (noch) nicht zum Laufen bekommen. :-(}
+\end{frame}
+
 
 \begin{frame}{Path-Monitoring}
 \emph{filemover.path}
@@ -502,28 +545,18 @@ Rescue-Mode nicht mehr funktioniert:
 
 {\normalsize\emph{filemover.service}}
 \lstinputlisting[style=numbered]{files/filemover.service}
-
 \end{frame}
 
 
-\begin{frame}
-\frametitle{User-\emph{systemd}\,\footnote{\emph{launchd} unter OS~X
-bietet etwas ähnliches.}}
+\begin{frame}{\emph{cgroups} und Resource-Management}
 \begin{itemize}
-\item Pro-User Instanz des \emph{systemd} (läuft mit dessen UID).
-\item Aktiviert beim Login User-spezifische Services.
-\item D-Bus-Kopplung; braucht X11-Session (?).
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}{Resource Management}
-\begin{itemize}
-\item Möglichkeit, Resourcenverbrauch einzelner Dienste etc. zu limitieren.
-\item \emph{systemd-cgls}: cgroups Slices,Scopes und Services auflisten.
+\item Linux Kernel-Feature um Resourcen von Prozessen oder
+Prozessgruppen zu limitieren.
+\item Eigene \emph{cgroup}-Hierarchie unter: \emph{/sys/fs/cgroup/systemd}.
+\item Unterteilung in \emph{Slices}, \emph{Scopes}, \emph{Services}.
+\item \emph{systemd-cgls}: cgroups-Hierarchie anzeigen.
 \item \emph{systemd-cgtop}: Top-artiger Output des Resourcenverbrauchs.
 \item systemd.resource-control(5)
-\item cgroup Hierarchie unter: \emph{/sys/fs/cgroup/systemd}.
 \end{itemize}
 \end{frame}
 
@@ -558,7 +591,7 @@ bietet etwas ähnliches.}}
     \framebreak
     
     \item \emph{systemd for Administrators}, Serie von Artikeln im Blog
-    von Lennart Poettering (mittlerweile 21 Teil!); viele
+    von Lennart Poettering (mittlerweile 21 Teile!); viele
     Architektur-Details:\\
     \url{http://0pointer.net/blog/archives.html}
 
