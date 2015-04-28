@@ -6,7 +6,7 @@
   {\scriptsize \href{mailto:andreas.haerpfer@consol.de}
    {\nolinkurl{(andreas.haerpfer@consol.de)}}}}
 \institute{Consol-Akademie}
-\date{v2, 10.~März 2015}
+\date{v2.1, 28.~April 2015}
 
 %% PDF properties
 \subject{systemd}
@@ -441,7 +441,7 @@ Rescue-Mode nicht mehr funktioniert:
 \footnotesize
 \lstinputlisting[style=numbered]{files/sshd.service}
 \small
-(Das korrespondierende Init-Skript ist 160~Zeilen lang [Debian Stable]).
+(Das korrespondierende Init-Skript ist 160~Zeilen lang [Debian Wheezy]).
 \end{frame}
 
 
@@ -521,21 +521,21 @@ Rescue-Mode nicht mehr funktioniert:
 \section[Advanced]{Advanced Features: Ein kleiner Ausblick, was sonst
 noch geht.}
 
-\begin{frame}[fragile]
-\frametitle{User-\emph{systemd}\,\footnote{\emph{launchd} unter OS~X
-bietet etwas ähnliches.}}
-\begin{itemize}
-\item Pro-User Instanz des \emph{systemd} (läuft mit dessen UID).
-\item Normalerweise Start bei Login und Stop bei Logout des Users.
-\item ``Linger''-Mode möglich mittels
-\begin{lstlisting}
-# loginctl enable-linger username
-\end{lstlisting}
-\item D-Bus-Kopplung; braucht X11-Session (?).
-\end{itemize}
-\vspace*{1ex}
-\tred{\dots ich hab's ohne X11 (noch) nicht zum Laufen bekommen. :-(}
-\end{frame}
+% \begin{frame}[fragile]
+% \frametitle{User-\emph{systemd}\,\footnote{\emph{launchd} unter OS~X
+% bietet etwas ähnliches.}}
+% \begin{itemize}
+% \item Pro-User Instanz des \emph{systemd} (läuft mit dessen UID).
+% \item Normalerweise Start bei Login und Stop bei Logout des Users.
+% \item ``Linger''-Mode möglich mittels
+% \begin{lstlisting}
+% # loginctl enable-linger username
+% \end{lstlisting}
+% \item D-Bus-Kopplung; braucht X11-Session (?).
+% \end{itemize}
+% \vspace*{1ex}
+% \tred{\dots ich hab's ohne X11 (noch) nicht zum Laufen bekommen. :-(}
+% \end{frame}
 
 
 \begin{frame}{Path-Monitoring}
